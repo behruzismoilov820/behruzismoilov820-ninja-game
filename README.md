@@ -1,1 +1,1 @@
-# behruzismoilov820-ninja-game
+ninja-game
