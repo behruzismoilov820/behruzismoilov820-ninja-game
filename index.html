@@ -4,12 +4,12 @@ HTML
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🥷 NINJA WARRIOR: LEGEND OF ADVENTURE ⚔️</title>
+    <title>🥷 NINJA WARRIOR: SHADOW DUEL ⚔️</title>
     <style>
         * { box-sizing: border-box; touch-action: manipulation; }
         body {
             margin: 0; padding: 10px;
-            background: #050505; color: #fff;
+            background: #020617; color: #fff;
             font-family: 'Courier New', Courier, monospace;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
@@ -17,34 +17,37 @@ HTML
         }
 
         #gameContainer {
-            background: linear-gradient(180deg, #111827 0%, #030712 100%);
+            background: linear-gradient(180deg, #090d16 0%, #020617 100%);
             padding: 15px; border-radius: 20px;
-            border: 2px solid rgba(239, 68, 68, 0.6);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(220, 38, 38, 0.3);
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(59, 130, 246, 0.2);
             display: flex; flex-direction: column; align-items: center;
             width: 100%; max-width: 740px; position: relative;
         }
 
-        /* Kirish Rasmi (2 sekund) */
         #splashScreen {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             width: 100%; height: 400px; text-align: center;
         }
         #splashScreen img {
             max-width: 100%; max-height: 350px; border-radius: 14px;
-            border: 2px solid rgba(239, 68, 68, 0.6);
-            box-shadow: 0 0 25px rgba(220,38,38,0.5);
+            border: 2px solid rgba(59, 130, 246, 0.6);
+            box-shadow: 0 0 25px rgba(59,130,246,0.4);
         }
 
         #ninjaMenu, #winModal { text-align: center; padding: 20px; width: 100%; display: none; }
         
         .btn {
-            display: block; width: 260px; padding: 14px; margin: 12px auto;
-            background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%); color: white; border: 2px solid #f87171; border-radius: 12px;
-            font-size: 17px; font-weight: 900; cursor: pointer; transition: 0.15s ease;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6); box-shadow: 0 6px 0 #7f1d1d, 0 8px 15px rgba(0,0,0,0.5);
+            display: block; width: 280px; padding: 14px; margin: 12px auto;
+            background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%); color: white; border: 2px solid #60a5fa; border-radius: 12px;
+            font-size: 16px; font-weight: 900; cursor: pointer; transition: 0.15s ease;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6); box-shadow: 0 6px 0 #1e40af, 0 8px 15px rgba(0,0,0,0.5);
         }
-        .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #7f1d1d; }
+        .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #1e40af; }
+        .btn-red {
+            background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%);
+            border-color: #f87171; box-shadow: 0 6px 0 #7f1d1d;
+        }
         .btn-green {
             background: linear-gradient(180deg, #22c55e 0%, #15803d 100%);
             border-color: #4ade80; box-shadow: 0 6px 0 #166534;
@@ -59,30 +62,30 @@ HTML
 
         #winModal {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 7, 18, 0.95); border-radius: 18px;
+            background: rgba(2, 6, 23, 0.95); border-radius: 18px;
             flex-direction: column; justify-content: center; align-items: center; z-index: 20;
         }
-        #winModal h2 { font-size: 34px; color: #ef4444; margin-bottom: 5px; text-shadow: 0 0 15px rgba(239, 68, 68, 0.6); }
+        #winModal h2 { font-size: 32px; color: #38bdf8; margin-bottom: 5px; text-shadow: 0 0 15px rgba(56, 189, 248, 0.6); }
         #winText { font-size: 20px; margin-bottom: 20px; color: #fff; font-weight: bold; text-align: center; }
 
         canvas {
-            border: 3px solid rgba(239, 68, 68, 0.6); border-radius: 14px;
+            border: 3px solid rgba(59, 130, 246, 0.6); border-radius: 14px;
             background: #020617; display: none; width: 100%; height: auto;
             box-shadow: 0 0 25px rgba(0,0,0,0.9);
         }
 
         .touch-controls {
             display: none; width: 100%; margin-top: 12px;
-            justify-content: space-between; gap: 8px;
+            justify-content: space-between; gap: 8px; flex-wrap: wrap;
         }
         .touch-group { display: flex; gap: 6px; }
         .t-btn {
-            background: #1f2937; color: white; border: 2px solid rgba(239, 68, 68, 0.5);
-            padding: 14px 20px; font-size: 16px; font-weight: bold;
-            border-radius: 12px; cursor: pointer; user-select: none; outline: none;
+            background: #1f2937; color: white; border: 2px solid rgba(59, 130, 246, 0.5);
+            padding: 12px 16px; font-size: 14px; font-weight: bold;
+            border-radius: 10px; cursor: pointer; user-select: none; outline: none;
             box-shadow: 0 4px 0 #111827;
         }
-        .t-btn:active { background: #dc2626; transform: translateY(2px); box-shadow: 0 1px 0 #111827; }
+        .t-btn:active { background: #2563eb; transform: translateY(2px); box-shadow: 0 1px 0 #111827; }
 
         @media (max-width: 768px) {
             .touch-controls { display: flex; }
@@ -96,17 +99,20 @@ HTML
         <!-- Kirish Rasmi (2 sekund) -->
         <div id="splashScreen">
             <img src="watermarked_img_1437238758356918555.jpg" alt="Ninja Warrior Intro">
-            <p style="color: #ef4444; margin-top: 12px; font-weight: bold; font-size: 15px; letter-spacing: 2px;">SAYOHAT YUKLANMOQDA...</p>
+            <p style="color: #38bdf8; margin-top: 12px; font-weight: bold; font-size: 15px; letter-spacing: 2px;">TUNGI O'YIN YUKLANMOQDA...</p>
         </div>
 
         <!-- Bosh Menyu -->
         <div id="ninjaMenu">
-            <h1 style="color: #ef4444; font-size: 28px; text-shadow: 0 0 10px rgba(239,68,68,0.5); margin-bottom: 5px;">NINJA WARRIOR</h1>
-            <p style="color: #9ca3af; font-size: 14px; margin-bottom: 25px;">LEGEND OF ADVENTURE</p>
-            <button class="btn" onclick="startGame()">⚔️ O'YINNI BOSHLASH</button>
-            <div style="margin-top: 20px; font-size: 12px; color: #9ca3af; line-height: 1.5;">
-                <p><b>Boshqaruv (PC):</b> A/D (Yurish) | W (Sakrash)</p>
-                <p><b>Hujum:</b> J (Qilich) | K (Shuriken Otish)</p>
+            <h1 style="color: #38bdf8; font-size: 26px; text-shadow: 0 0 10px rgba(56,189,248,0.5); margin-bottom: 5px;">NINJA WARRIOR</h1>
+            <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">SHADOW DUEL</p>
+            
+            <button class="btn" onclick="startGame(1)">⚔️ 1 KISHI (VS BOT)</button>
+            <button class="btn btn-red" onclick="startGame(2)">👥 2 KISHILIK (DUEL)</button>
+
+            <div style="margin-top: 15px; font-size: 11px; color: #94a3b8; line-height: 1.5; text-align: left; display: inline-block;">
+                <p><b>P1 (Ko'k Ninja):</b> A/D (Yurish) | W (Sakrash) | S (Qilich) | E (Shuriken) | Q (Maxsus)</p>
+                <p><b>P2 (Qizil Ninja):</b> J/L (Yurish) | I (Sakrash) | K (Qilich) | O (Shuriken) | U (Maxsus)</p>
             </div>
         </div>
 
@@ -114,22 +120,22 @@ HTML
 
         <!-- Natija Oynasi -->
         <div id="winModal">
-            <h2 id="winTitle">⚔️ VAZIFA BAJARILDI</h2>
+            <h2 id="winTitle">⚔️ G'OLIB!</h2>
             <div id="winText">G'alaba!</div>
-            <button class="btn btn-green" onclick="startGame()">🔄 QAYTA O'YNASH</button>
+            <button class="btn btn-green" onclick="startGame(gameMode)">🔄 QAYTA O'YNASH</button>
             <button class="btn" onclick="returnToMenu()">🏠 MENYU</button>
         </div>
 
         <!-- Sensorli Panel -->
         <div class="touch-controls" id="touchPanel">
             <div class="touch-group">
-                <button class="t-btn" ontouchstart="tState.left=true" ontouchend="tState.left=false">◀️</button>
-                <button class="t-btn" ontouchstart="tState.right=true" ontouchend="tState.right=false">▶️</button>
+                <button class="t-btn" ontouchstart="p1.vx=-4.5" ontouchend="p1.vx=0">◀️</button>
+                <button class="t-btn" ontouchstart="p1.vx=4.5" ontouchend="p1.vx=0">▶️</button>
+                <button class="t-btn" style="background:#2563eb;" onclick="playerJump(p1)">⬆️</button>
             </div>
             <div class="touch-group">
-                <button class="t-btn" style="background:#b91c1c;" onclick="playerAttack()">⚔️ Qilich</button>
-                <button class="t-btn" style="background:#d97706;" onclick="playerThrow()">🎯 Shuriken</button>
-                <button class="t-btn" style="background:#1d4ed8;" ontouchstart="playerJump()" onmousedown="playerJump()">⬆️ Sakrash</button>
+                <button class="t-btn" style="background:#b91c1c;" onclick="playerAttack(p1, p2)">⚔️ Qilich</button>
+                <button class="t-btn" style="background:#d97706;" onclick="playerThrow(p1)">🎯 Shuriken</button>
             </div>
         </div>
     </div>
@@ -149,65 +155,103 @@ HTML
         let winTitle = document.getElementById('winTitle');
         let winText = document.getElementById('winText');
 
-        let score = 0, health = 100, enemyKills = 0;
+        let gameMode = 1;
         let gameRunning = false;
 
-        let player = { x: 80, y: 260, w: 30, h: 45, vx: 0, vy: 0, speed: 4.5, isJumping: false, dir: 1 };
-        let enemy = { x: 550, y: 265, w: 30, h: 40, vx: -2, hp: 3, alive: true };
+        let p1 = { x: 100, y: 260, w: 30, h: 45, vx: 0, vy: 0, speed: 4.5, isJumping: false, dir: 1, hp: 100, color: "#3b82f6" }; // Ko'k Ninja
+        let p2 = { x: 550, y: 260, w: 30, h: 45, vx: 0, vy: 0, speed: 4.5, isJumping: false, dir: -1, hp: 100, color: "#ef4444" }; // Qizil Ninja
         let shurikens = [];
         let keys = {};
-        let tState = { left: false, right: false };
 
         window.addEventListener("keydown", e => {
-            keys[e.code] = true; keys[e.key.toLowerCase()] = true;
-            if (e.code === "KeyJ" || e.key.toLowerCase() === "j") playerAttack();
-            if (e.code === "KeyK" || e.key.toLowerCase() === "k") playerThrow();
-            if (e.code === "KeyW" || e.key.toLowerCase() === "w") playerJump();
-        });
-        window.addEventListener("keyup", e => { keys[e.code] = false; keys[e.key.toLowerCase()] = false; });
+            let key = e.key.toLowerCase();
+            keys[e.code] = true; keys[key] = true;
+            
+            // P1 tugmalari (A, D, W, S, E, Q)
+            if (key === "a") { p1.vx = -p1.speed; p1.dir = -1; }
+            if (key === "d") { p1.vx = p1.speed; p1.dir = 1; }
+            if (key === "w") playerJump(p1);
+            if (key === "s") playerAttack(p1, p2);
+            if (key === "e") playerThrow(p1);
+            if (key === "q") specialMove(p1, p2);
 
-        function playerJump() {
-            if (!player.isJumping && gameRunning) {
-                player.vy = -12;
-                player.isJumping = true;
+            // P2 tugmalari (2 kishilik rejim: J, L, I, K, O, U)
+            if (gameMode === 2) {
+                if (key === "j") { p2.vx = -p2.speed; p2.dir = -1; }
+                if (key === "l") { p2.vx = p2.speed; p2.dir = 1; }
+                if (key === "i") playerJump(p2);
+                if (key === "k") playerAttack(p2, p1);
+                if (key === "o") playerThrow(p2);
+                if (key === "u") specialMove(p2, p1);
+            }
+        });
+        
+        window.addEventListener("keyup", e => {
+            let key = e.key.toLowerCase();
+            keys[e.code] = false; keys[key] = false;
+
+            if (key === "a" || key === "d") p1.vx = 0;
+            if (gameMode === 2 && (key === "j" || key === "l")) p2.vx = 0;
+        });
+
+        function playerJump(p) {
+            if (!p.isJumping && gameRunning) {
+                p.vy = -12;
+                p.isJumping = true;
             }
         }
 
-        function playerAttack() {
+        function playerAttack(attacker, target) {
             if (!gameRunning) return;
-            // Yaqin masofadagi dushmanga qilich bilan zarba
-            if (Math.abs(player.x - enemy.x) < 50 && enemy.alive) {
-                enemy.hp--;
-                if (enemy.hp <= 0) {
-                    enemy.alive = false;
-                    enemyKills++;
-                    score += 100;
-                    setTimeout(respawnEnemy, 1500);
+            if (Math.abs(attacker.x - target.x) < 55) {
+                target.hp -= 15;
+                checkGameOver();
+            }
+        }
+
+        function playerThrow(p) {
+            if (!gameRunning) return;
+            shurikens.push({ x: p.x + (p.dir > 0 ? 30 : -10), y: p.y + 20, vx: p.dir * 10, owner: p });
+        }
+
+        function specialMove(attacker, target) {
+            if (!gameRunning) return;
+            if (Math.abs(attacker.x - target.x) < 80) {
+                target.hp -= 25;
+                attacker.x += attacker.dir * 40; // Tezkor dash / siljish
+                checkGameOver();
+            }
+        }
+
+        function checkGameOver() {
+            if (p1.hp <= 0 || p2.hp <= 0) {
+                gameRunning = false;
+                winModal.style.display = 'flex';
+                if (p1.hp <= 0 && p2.hp <= 0) {
+                    winTitle.innerText = "🤝 DURANG!";
+                    winText.innerText = "Ikki ninja ham yiqildi!";
+                } else if (p1.hp <= 0) {
+                    winTitle.innerText = gameMode === 1 ? "💀 YUTQAZDINGIZ!" : "🏆 QIZIL NINJA G'OLIB!";
+                    winText.innerText = "Qizil Ninja g'alaba qozondi!";
+                } else {
+                    winTitle.innerText = "🏆 KO'K NINJA G'OLIB!";
+                    winText.innerText = "Ko'k Ninja g'alaba qozondi!";
                 }
             }
         }
 
-        function playerThrow() {
-            if (!gameRunning) return;
-            shurikens.push({ x: player.x + (player.dir > 0 ? 30 : -10), y: player.y + 20, vx: player.dir * 9 });
-        }
-
-        function respawnEnemy() {
-            enemy.x = 600;
-            enemy.hp = 3;
-            enemy.alive = true;
-        }
-
-        function startGame() {
+        function startGame(mode) {
+            gameMode = mode;
             ninjaMenu.style.display = 'none';
             winModal.style.display = 'none';
             canvas.style.display = 'block';
-            touchPanel.style.display = 'flex';
+            touchPanel.style.display = gameMode === 2 ? 'none' : 'flex';
             menuBtn.style.display = 'block';
 
-            score = 0; health = 100; enemyKills = 0;
-            player.x = 80; player.y = 260; player.vx = 0; player.vy = 0;
-            respawnEnemy();
+            p1.x = 100; p1.y = 260; p1.hp = 100; p1.vx = 0; p1.vy = 0;
+            p2.x = 550; p2.y = 260; p2.hp = 100; p2.vx = 0; p2.vy = 0;
+            shurikens = [];
+
             gameRunning = true;
             loop();
         }
@@ -224,107 +268,93 @@ HTML
         function update() {
             if (!gameRunning) return;
 
-            if (keys["KeyA"] || keys["a"] || tState.left) { player.vx = -player.speed; player.dir = -1; }
-            else if (keys["KeyD"] || keys["d"] || tState.right) { player.vx = player.speed; player.dir = 1; }
-            else player.vx = 0;
-
-            player.vy += 0.55; player.y += player.vy; player.x += player.vx;
-
-            if (player.y > 260) { player.y = 260; player.vy = 0; player.isJumping = false; }
-            if (player.x < 15) player.x = 15; if (player.x > 660) player.x = 660;
-
-            // Dushman harakati va hujumi
-            if (enemy.alive) {
-                if (enemy.x > player.x + 15) enemy.x -= 1.5;
-                else if (enemy.x < player.x - 15) enemy.x += 1.5;
-
-                // O'yinchiga tegsa jon kamayishi
-                if (Math.abs(player.x - enemy.x) < 25) {
-                    health -= 0.5;
-                    if (health <= 0) {
-                        gameRunning = false;
-                        winModal.style.display = 'flex';
-                        winTitle.innerText = "💀 MAG'LUB BO'LDINGiz";
-                        winText.innerText = `O'ldirilgan dushmanlar: ${enemyKills}`;
-                    }
+            // Bot AI (1 kishilik rejimda Qizil Ninja avtomatik o'ynaydi)
+            if (gameMode === 1) {
+                if (p2.x > p1.x + 25) { p2.vx = -2.5; p2.dir = -1; }
+                else if (p2.x < p1.x - 25) { p2.vx = 2.5; p2.dir = 1; }
+                else { p2.vx = 0; }
+                if (Math.abs(p1.x - p2.x) < 45 && Math.random() < 0.04) {
+                    playerAttack(p2, p1);
                 }
             }
 
-            // Shurikenlar harakati
+            // Fizika va gravitatsiya
+            [p1, p2].forEach(p => {
+                p.vy += 0.55; p.y += p.vy; p.x += p.vx;
+                if (p.y > 260) { p.y = 260; p.vy = 0; p.isJumping = false; }
+                if (p.x < 15) p.x = 15; if (p.x > 660) p.x = 660;
+            });
+
+            // Shurikenlar
             shurikens.forEach((s, idx) => {
                 s.x += s.vx;
-                if (enemy.alive && Math.abs(s.x - enemy.x) < 20) {
-                    enemy.hp--;
+                let target = (s.owner === p1) ? p2 : p1;
+                if (Math.abs(s.x - target.x) < 20 && Math.abs(s.y - target.y) < 30) {
+                    target.hp -= 10;
                     shurikens.splice(idx, 1);
-                    if (enemy.hp <= 0) {
-                        enemy.alive = false;
-                        enemyKills++;
-                        score += 100;
-                        setTimeout(respawnEnemy, 1500);
-                    }
+                    checkGameOver();
                 }
                 if (s.x < 0 || s.x > 700) shurikens.splice(idx, 1);
             });
         }
 
         function drawBackground() {
-            // Tungi osmon va oy
-            ctx.fillStyle = "#030712"; ctx.fillRect(0, 0, 700, 400);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
-            ctx.beginPath(); ctx.arc(580, 80, 45, 0, Math.PI*2); ctx.fill();
+            // Tungi qorong'u osmon va yorqin oy
+            ctx.fillStyle = "#020617"; ctx.fillRect(0, 0, 700, 400);
+            
+            ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+            ctx.beginPath(); ctx.arc(580, 70, 35, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = "#020617"; // Oyning chuqur effekti
+            ctx.beginPath(); ctx.arc(570, 65, 30, 0, Math.PI*2); ctx.fill();
 
-            // Uylar silueti (Shadow backgrounds)
+            // Qorong'u uylar silueti
             ctx.fillStyle = "#0f172a";
-            ctx.fillRect(40, 150, 90, 160);
-            ctx.fillRect(160, 100, 110, 210);
-            ctx.fillRect(320, 180, 100, 130);
-            ctx.fillRect(480, 120, 130, 190);
+            ctx.fillRect(30, 140, 90, 170);
+            ctx.fillRect(150, 90, 110, 220);
+            ctx.fillRect(310, 160, 100, 150);
+            ctx.fillRect(470, 110, 130, 200);
 
             // Yer (Ground)
-            ctx.fillStyle = "#1e293b"; ctx.fillRect(0, 310, 700, 90);
-            ctx.strokeStyle = "#ef4444"; ctx.lineWidth = 3;
+            ctx.fillStyle = "#090d16"; ctx.fillRect(0, 310, 700, 90);
+            ctx.strokeStyle = "#38bdf8"; ctx.lineWidth = 3;
             ctx.beginPath(); ctx.moveTo(0, 310); ctx.lineTo(700, 310); ctx.stroke();
         }
 
-        function drawNinjaSilhouette(x, y, w, h, isEnemy, dir) {
-            ctx.fillStyle = isEnemy ? "#991b1b" : "#111827"; // O'yinchi qora siluet, dushman qizg'ish-qora
-            
-            // Tana (Body)
-            ctx.fillRect(x + 5, y + 15, w - 10, h - 20);
-            // Bosh (Head)
-            ctx.beginPath(); ctx.arc(x + w/2, y + 10, 10, 0, Math.PI*2); ctx.fill();
+        function drawNinja(p, accentColor) {
+            // Tana (Qorong'u soyali siluet)
+            ctx.fillStyle = "#0f172a";
+            ctx.fillRect(p.x + 5, p.y + 15, p.w - 10, p.h - 20);
+            ctx.beginPath(); ctx.arc(p.x + p.w/2, p.y + 10, 10, 0, Math.PI*2); ctx.fill();
 
-            // Qizil qism (Ninja Headband & Scarf flow)
-            ctx.fillStyle = "#ef4444";
-            ctx.fillRect(x + (dir > 0 ? w - 8 : 0), y + 6, 12, 4);
+            // Ninja boshbog'i va rangli detal (Ko'k yoki Qizil)
+            ctx.fillStyle = accentColor;
+            ctx.fillRect(p.x + (p.dir > 0 ? p.w - 8 : 0), p.y + 6, 12, 4);
 
-            // Ko'zlar (Glowing Eyes)
+            // Porlab turgan ko'zlar
             ctx.fillStyle = "#facc15";
-            ctx.fillRect(x + (dir > 0 ? w/2 + 2 : w/2 - 6), y + 8, 4, 3);
+            ctx.fillRect(p.x + (p.dir > 0 ? p.w/2 + 2 : p.w/2 - 6), p.y + 8, 4, 3);
         }
 
         function draw() {
             drawBackground();
 
-            // Interfeys (UI)
-            ctx.fillStyle = "#ef4444"; ctx.font = "bold 16px Courier New";
-            ctx.fillText(`JON: ${Math.max(0, Math.floor(health))}%`, 25, 30);
-            ctx.fillText(`HISOB: ${score}`, 320, 30);
-            ctx.fillText(`DUSHMANLAR: ${enemyKills}`, 520, 30);
+            // HP / Jon panellari
+            ctx.fillStyle = "#0f172a"; ctx.fillRect(20, 15, 200, 18);
+            ctx.fillStyle = "#3b82f6"; ctx.fillRect(20, 15, (p1.hp / 100) * 200, 18);
+            ctx.strokeStyle = "#38bdf8"; ctx.lineWidth = 2; ctx.strokeRect(20, 15, 200, 18);
+            ctx.fillStyle = "#fff"; ctx.font = "bold 12px Courier New"; ctx.fillText(`KO'K NINJA: ${Math.max(0, p1.hp)}%`, 25, 29);
 
-            // O'yinchi
-            drawNinjaSilhouette(player.x, player.y, player.w, player.h, false, player.dir);
+            ctx.fillStyle = "#0f172a"; ctx.fillRect(480, 15, 200, 18);
+            ctx.fillStyle = "#ef4444"; ctx.fillRect(480, 15, (p2.hp / 100) * 200, 18);
+            ctx.strokeStyle = "#f87171"; ctx.lineWidth = 2; ctx.strokeRect(480, 15, 200, 18);
+            ctx.fillStyle = "#fff"; ctx.fillText(gameMode === 2 ? `QIZIL NINJA: ${Math.max(0, p2.hp)}%` : `BOT NINJA: ${Math.max(0, p2.hp)}%`, 485, 29);
 
-            // Dushman
-            if (enemy.alive) {
-                drawNinjaSilhouette(enemy.x, enemy.y, enemy.w, enemy.h, true, -1);
-                // Dushman HP chizig'i
-                ctx.fillStyle = "rgba(0,0,0,0.5)"; ctx.fillRect(enemy.x, enemy.y - 12, 30, 4);
-                ctx.fillStyle = "#ef4444"; ctx.fillRect(enemy.x, enemy.y - 12, (enemy.hp / 3) * 30, 4);
-            }
+            // Ninjalarni chizish (1-o'yinchi Ko'k, 2-o'yinchi Qizil)
+            drawNinja(p1, "#3b82f6"); 
+            drawNinja(p2, "#ef4444"); 
 
             // Shurikenlar
-            ctx.fillStyle = "#cbd5e1";
+            ctx.fillStyle = "#e2e8f0";
             shurikens.forEach(s => {
                 ctx.beginPath(); ctx.arc(s.x, s.y, 5, 0, Math.PI*2); ctx.fill();
             });
