@@ -1,1 +1,339 @@
+HTML
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🥷 NINJA WARRIOR: LEGEND OF ADVENTURE ⚔️</title>
+    <style>
+        * { box-sizing: border-box; touch-action: manipulation; }
+        body {
+            margin: 0; padding: 10px;
+            background: #050505; color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            min-height: 100vh; overflow: hidden;
+        }
 
+        #gameContainer {
+            background: linear-gradient(180deg, #111827 0%, #030712 100%);
+            padding: 15px; border-radius: 20px;
+            border: 2px solid rgba(239, 68, 68, 0.6);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(220, 38, 38, 0.3);
+            display: flex; flex-direction: column; align-items: center;
+            width: 100%; max-width: 740px; position: relative;
+        }
+
+        /* Kirish Rasmi (2 sekund) */
+        #splashScreen {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 100%; height: 400px; text-align: center;
+        }
+        #splashScreen img {
+            max-width: 100%; max-height: 350px; border-radius: 14px;
+            border: 2px solid rgba(239, 68, 68, 0.6);
+            box-shadow: 0 0 25px rgba(220,38,38,0.5);
+        }
+
+        #ninjaMenu, #winModal { text-align: center; padding: 20px; width: 100%; display: none; }
+        
+        .btn {
+            display: block; width: 260px; padding: 14px; margin: 12px auto;
+            background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%); color: white; border: 2px solid #f87171; border-radius: 12px;
+            font-size: 17px; font-weight: 900; cursor: pointer; transition: 0.15s ease;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6); box-shadow: 0 6px 0 #7f1d1d, 0 8px 15px rgba(0,0,0,0.5);
+        }
+        .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #7f1d1d; }
+        .btn-green {
+            background: linear-gradient(180deg, #22c55e 0%, #15803d 100%);
+            border-color: #4ade80; box-shadow: 0 6px 0 #166534;
+        }
+
+        .menu-btn {
+            position: absolute; top: 12px; left: 12px;
+            background: #374151; color: white; border: 2px solid #6b7280;
+            padding: 6px 12px; font-size: 13px; font-weight: bold;
+            border-radius: 8px; cursor: pointer; display: none; z-index: 10;
+        }
+
+        #winModal {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 7, 18, 0.95); border-radius: 18px;
+            flex-direction: column; justify-content: center; align-items: center; z-index: 20;
+        }
+        #winModal h2 { font-size: 34px; color: #ef4444; margin-bottom: 5px; text-shadow: 0 0 15px rgba(239, 68, 68, 0.6); }
+        #winText { font-size: 20px; margin-bottom: 20px; color: #fff; font-weight: bold; text-align: center; }
+
+        canvas {
+            border: 3px solid rgba(239, 68, 68, 0.6); border-radius: 14px;
+            background: #020617; display: none; width: 100%; height: auto;
+            box-shadow: 0 0 25px rgba(0,0,0,0.9);
+        }
+
+        .touch-controls {
+            display: none; width: 100%; margin-top: 12px;
+            justify-content: space-between; gap: 8px;
+        }
+        .touch-group { display: flex; gap: 6px; }
+        .t-btn {
+            background: #1f2937; color: white; border: 2px solid rgba(239, 68, 68, 0.5);
+            padding: 14px 20px; font-size: 16px; font-weight: bold;
+            border-radius: 12px; cursor: pointer; user-select: none; outline: none;
+            box-shadow: 0 4px 0 #111827;
+        }
+        .t-btn:active { background: #dc2626; transform: translateY(2px); box-shadow: 0 1px 0 #111827; }
+
+        @media (max-width: 768px) {
+            .touch-controls { display: flex; }
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <button class="menu-btn" id="menuBtn" onclick="returnToMenu()">🏠 Menyu</button>
+
+        <!-- Kirish Rasmi (2 sekund) -->
+        <div id="splashScreen">
+            <img src="watermarked_img_1437238758356918555.jpg" alt="Ninja Warrior Intro">
+            <p style="color: #ef4444; margin-top: 12px; font-weight: bold; font-size: 15px; letter-spacing: 2px;">SAYOHAT YUKLANMOQDA...</p>
+        </div>
+
+        <!-- Bosh Menyu -->
+        <div id="ninjaMenu">
+            <h1 style="color: #ef4444; font-size: 28px; text-shadow: 0 0 10px rgba(239,68,68,0.5); margin-bottom: 5px;">NINJA WARRIOR</h1>
+            <p style="color: #9ca3af; font-size: 14px; margin-bottom: 25px;">LEGEND OF ADVENTURE</p>
+            <button class="btn" onclick="startGame()">⚔️ O'YINNI BOSHLASH</button>
+            <div style="margin-top: 20px; font-size: 12px; color: #9ca3af; line-height: 1.5;">
+                <p><b>Boshqaruv (PC):</b> A/D (Yurish) | W (Sakrash)</p>
+                <p><b>Hujum:</b> J (Qilich) | K (Shuriken Otish)</p>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas" width="700" height="400"></canvas>
+
+        <!-- Natija Oynasi -->
+        <div id="winModal">
+            <h2 id="winTitle">⚔️ VAZIFA BAJARILDI</h2>
+            <div id="winText">G'alaba!</div>
+            <button class="btn btn-green" onclick="startGame()">🔄 QAYTA O'YNASH</button>
+            <button class="btn" onclick="returnToMenu()">🏠 MENYU</button>
+        </div>
+
+        <!-- Sensorli Panel -->
+        <div class="touch-controls" id="touchPanel">
+            <div class="touch-group">
+                <button class="t-btn" ontouchstart="tState.left=true" ontouchend="tState.left=false">◀️</button>
+                <button class="t-btn" ontouchstart="tState.right=true" ontouchend="tState.right=false">▶️</button>
+            </div>
+            <div class="touch-group">
+                <button class="t-btn" style="background:#b91c1c;" onclick="playerAttack()">⚔️ Qilich</button>
+                <button class="t-btn" style="background:#d97706;" onclick="playerThrow()">🎯 Shuriken</button>
+                <button class="t-btn" style="background:#1d4ed8;" ontouchstart="playerJump()" onmousedown="playerJump()">⬆️ Sakrash</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById('splashScreen').style.display = 'none';
+            document.getElementById('ninjaMenu').style.display = 'block';
+        }, 2000);
+
+        let canvas = document.getElementById('gameCanvas');
+        let ctx = canvas.getContext("2d");
+        let ninjaMenu = document.getElementById('ninjaMenu');
+        let touchPanel = document.getElementById('touchPanel');
+        let menuBtn = document.getElementById('menuBtn');
+        let winModal = document.getElementById('winModal');
+        let winTitle = document.getElementById('winTitle');
+        let winText = document.getElementById('winText');
+
+        let score = 0, health = 100, enemyKills = 0;
+        let gameRunning = false;
+
+        let player = { x: 80, y: 260, w: 30, h: 45, vx: 0, vy: 0, speed: 4.5, isJumping: false, dir: 1 };
+        let enemy = { x: 550, y: 265, w: 30, h: 40, vx: -2, hp: 3, alive: true };
+        let shurikens = [];
+        let keys = {};
+        let tState = { left: false, right: false };
+
+        window.addEventListener("keydown", e => {
+            keys[e.code] = true; keys[e.key.toLowerCase()] = true;
+            if (e.code === "KeyJ" || e.key.toLowerCase() === "j") playerAttack();
+            if (e.code === "KeyK" || e.key.toLowerCase() === "k") playerThrow();
+            if (e.code === "KeyW" || e.key.toLowerCase() === "w") playerJump();
+        });
+        window.addEventListener("keyup", e => { keys[e.code] = false; keys[e.key.toLowerCase()] = false; });
+
+        function playerJump() {
+            if (!player.isJumping && gameRunning) {
+                player.vy = -12;
+                player.isJumping = true;
+            }
+        }
+
+        function playerAttack() {
+            if (!gameRunning) return;
+            // Yaqin masofadagi dushmanga qilich bilan zarba
+            if (Math.abs(player.x - enemy.x) < 50 && enemy.alive) {
+                enemy.hp--;
+                if (enemy.hp <= 0) {
+                    enemy.alive = false;
+                    enemyKills++;
+                    score += 100;
+                    setTimeout(respawnEnemy, 1500);
+                }
+            }
+        }
+
+        function playerThrow() {
+            if (!gameRunning) return;
+            shurikens.push({ x: player.x + (player.dir > 0 ? 30 : -10), y: player.y + 20, vx: player.dir * 9 });
+        }
+
+        function respawnEnemy() {
+            enemy.x = 600;
+            enemy.hp = 3;
+            enemy.alive = true;
+        }
+
+        function startGame() {
+            ninjaMenu.style.display = 'none';
+            winModal.style.display = 'none';
+            canvas.style.display = 'block';
+            touchPanel.style.display = 'flex';
+            menuBtn.style.display = 'block';
+
+            score = 0; health = 100; enemyKills = 0;
+            player.x = 80; player.y = 260; player.vx = 0; player.vy = 0;
+            respawnEnemy();
+            gameRunning = true;
+            loop();
+        }
+
+        function returnToMenu() {
+            gameRunning = false;
+            canvas.style.display = 'none';
+            touchPanel.style.display = 'none';
+            menuBtn.style.display = 'none';
+            winModal.style.display = 'none';
+            ninjaMenu.style.display = 'block';
+        }
+
+        function update() {
+            if (!gameRunning) return;
+
+            if (keys["KeyA"] || keys["a"] || tState.left) { player.vx = -player.speed; player.dir = -1; }
+            else if (keys["KeyD"] || keys["d"] || tState.right) { player.vx = player.speed; player.dir = 1; }
+            else player.vx = 0;
+
+            player.vy += 0.55; player.y += player.vy; player.x += player.vx;
+
+            if (player.y > 260) { player.y = 260; player.vy = 0; player.isJumping = false; }
+            if (player.x < 15) player.x = 15; if (player.x > 660) player.x = 660;
+
+            // Dushman harakati va hujumi
+            if (enemy.alive) {
+                if (enemy.x > player.x + 15) enemy.x -= 1.5;
+                else if (enemy.x < player.x - 15) enemy.x += 1.5;
+
+                // O'yinchiga tegsa jon kamayishi
+                if (Math.abs(player.x - enemy.x) < 25) {
+                    health -= 0.5;
+                    if (health <= 0) {
+                        gameRunning = false;
+                        winModal.style.display = 'flex';
+                        winTitle.innerText = "💀 MAG'LUB BO'LDINGiz";
+                        winText.innerText = `O'ldirilgan dushmanlar: ${enemyKills}`;
+                    }
+                }
+            }
+
+            // Shurikenlar harakati
+            shurikens.forEach((s, idx) => {
+                s.x += s.vx;
+                if (enemy.alive && Math.abs(s.x - enemy.x) < 20) {
+                    enemy.hp--;
+                    shurikens.splice(idx, 1);
+                    if (enemy.hp <= 0) {
+                        enemy.alive = false;
+                        enemyKills++;
+                        score += 100;
+                        setTimeout(respawnEnemy, 1500);
+                    }
+                }
+                if (s.x < 0 || s.x > 700) shurikens.splice(idx, 1);
+            });
+        }
+
+        function drawBackground() {
+            // Tungi osmon va oy
+            ctx.fillStyle = "#030712"; ctx.fillRect(0, 0, 700, 400);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+            ctx.beginPath(); ctx.arc(580, 80, 45, 0, Math.PI*2); ctx.fill();
+
+            // Uylar silueti (Shadow backgrounds)
+            ctx.fillStyle = "#0f172a";
+            ctx.fillRect(40, 150, 90, 160);
+            ctx.fillRect(160, 100, 110, 210);
+            ctx.fillRect(320, 180, 100, 130);
+            ctx.fillRect(480, 120, 130, 190);
+
+            // Yer (Ground)
+            ctx.fillStyle = "#1e293b"; ctx.fillRect(0, 310, 700, 90);
+            ctx.strokeStyle = "#ef4444"; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(0, 310); ctx.lineTo(700, 310); ctx.stroke();
+        }
+
+        function drawNinjaSilhouette(x, y, w, h, isEnemy, dir) {
+            ctx.fillStyle = isEnemy ? "#991b1b" : "#111827"; // O'yinchi qora siluet, dushman qizg'ish-qora
+            
+            // Tana (Body)
+            ctx.fillRect(x + 5, y + 15, w - 10, h - 20);
+            // Bosh (Head)
+            ctx.beginPath(); ctx.arc(x + w/2, y + 10, 10, 0, Math.PI*2); ctx.fill();
+
+            // Qizil qism (Ninja Headband & Scarf flow)
+            ctx.fillStyle = "#ef4444";
+            ctx.fillRect(x + (dir > 0 ? w - 8 : 0), y + 6, 12, 4);
+
+            // Ko'zlar (Glowing Eyes)
+            ctx.fillStyle = "#facc15";
+            ctx.fillRect(x + (dir > 0 ? w/2 + 2 : w/2 - 6), y + 8, 4, 3);
+        }
+
+        function draw() {
+            drawBackground();
+
+            // Interfeys (UI)
+            ctx.fillStyle = "#ef4444"; ctx.font = "bold 16px Courier New";
+            ctx.fillText(`JON: ${Math.max(0, Math.floor(health))}%`, 25, 30);
+            ctx.fillText(`HISOB: ${score}`, 320, 30);
+            ctx.fillText(`DUSHMANLAR: ${enemyKills}`, 520, 30);
+
+            // O'yinchi
+            drawNinjaSilhouette(player.x, player.y, player.w, player.h, false, player.dir);
+
+            // Dushman
+            if (enemy.alive) {
+                drawNinjaSilhouette(enemy.x, enemy.y, enemy.w, enemy.h, true, -1);
+                // Dushman HP chizig'i
+                ctx.fillStyle = "rgba(0,0,0,0.5)"; ctx.fillRect(enemy.x, enemy.y - 12, 30, 4);
+                ctx.fillStyle = "#ef4444"; ctx.fillRect(enemy.x, enemy.y - 12, (enemy.hp / 3) * 30, 4);
+            }
+
+            // Shurikenlar
+            ctx.fillStyle = "#cbd5e1";
+            shurikens.forEach(s => {
+                ctx.beginPath(); ctx.arc(s.x, s.y, 5, 0, Math.PI*2); ctx.fill();
+            });
+        }
+
+        function loop() {
+            if (!gameRunning) return;
+            update(); draw(); requestAnimationFrame(loop);
+        }
+    </script>
+</body>
+</html>
